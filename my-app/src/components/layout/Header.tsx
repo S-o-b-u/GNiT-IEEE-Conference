@@ -1,6 +1,7 @@
 // client/src/components/layout/Header.tsx
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "wouter";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -42,7 +43,7 @@ const NAV: NavItem[] = [
 ];
 
 export function Header() {
-  const [location] = useLocation();
+  const location = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [mobileOpenGroups, setMobileOpenGroups] = useState<

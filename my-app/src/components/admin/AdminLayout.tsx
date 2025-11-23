@@ -1,5 +1,6 @@
 import { ReactNode, useEffect } from "react";
-import { Link, useLocation } from "wouter";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Settings, Calendar, Users, Mic, CreditCard, Mail, FileText, LogOut, Home } from "lucide-react";
 
