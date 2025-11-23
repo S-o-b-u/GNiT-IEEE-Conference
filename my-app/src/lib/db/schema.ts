@@ -99,6 +99,8 @@ export type NewContact = typeof contacts.$inferInsert;
 export type PageContent = typeof pages.$inferSelect; 
 export type NewPageContent = typeof pages.$inferInsert; 
 
+export type RegistrationFees = typeof registrationFees.$inferSelect
+
 /**
  * 
  * 
