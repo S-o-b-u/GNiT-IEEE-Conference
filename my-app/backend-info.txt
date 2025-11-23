@@ -1,0 +1,13 @@
+routes -> 
+
+src/app/api/speakers/
+
+src/app/api/pages/[slug]/
+
+src/app/api/settings/
+
+src/app/api/dates/
+
+src/app/api/committee/
+
+src/app/api/admin/login/
