@@ -1,3 +1,4 @@
+"use client";
 import { useQuery } from "@tanstack/react-query";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Card, CardContent } from "@/components/ui/card";

@@ -1,3 +1,4 @@
+"use client";
 import CommitteePageLayout from "@/components/layout/CommitteePageLayout";
 
 const chiefPatron = [{ name: "Sardar Taranjit Singh", affiliation: "MD, JIS Group" }];

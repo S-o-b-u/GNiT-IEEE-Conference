@@ -1,3 +1,4 @@
+"use client";
 import { useQuery } from "@tanstack/react-query";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { HeroSection } from "@/components/home/HeroSection";

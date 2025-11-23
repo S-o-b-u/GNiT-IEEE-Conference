@@ -1,3 +1,4 @@
+"use client";
 import CommitteePageLayout from "@/components/layout/CommitteePageLayout";
 
 const organisingCommittee = [
