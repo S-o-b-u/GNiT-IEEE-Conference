@@ -90,11 +90,24 @@ export type NewSpeaker = typeof speakers.$inferInsert;
 export type CommitteeMember = typeof committee.$inferSelect; 
 export type InsertCommitteeMember = typeof committee.$inferInsert; 
 
+export type ImportantDate = typeof importantDates.$inferSelect;
+export type InsertImportantDate = typeof importantDates.$inferInsert;
+
+export type Contact = typeof contacts.$inferSelect;
+export type NewContact = typeof contacts.$inferInsert;
+
 export type PageContent = typeof pages.$inferSelect; 
 export type NewPageContent = typeof pages.$inferInsert; 
 
 /**
  * 
+ * 
+Entity,Read Type (Output),Write Type (Input)
+Settings,GeneralSetting,InsertGeneralSetting
+Speaker,Speaker,NewSpeaker
+Date,ImportantDate,InsertImportantDate
+Committee,CommitteeMember,NewCommitteeMember
+Page,PageContent,NewPageContent
 $inferSelect (The "Read" Type)
 This represents the data coming OUT of the database.
 
