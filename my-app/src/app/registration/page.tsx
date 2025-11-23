@@ -4,17 +4,26 @@ import { PageLayout } from "@/components/layout/PageLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { CreditCard, CheckCircle2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import type { RegistrationFee } from "@shared/schema";
+import type { RegistrationFee } from "@/lib/db/schema";
 
 export default function Registration() {
   const { data: fees, isLoading } = useQuery<RegistrationFee[]>({
     queryKey: ["/api/registration-fees"],
   });
 
-  const sortedFees = fees ? [...fees].sort((a, b) => (a.order || 0) - (b.order || 0)) : [];
+  const sortedFees = fees
+    ? [...fees].sort((a, b) => (a.order || 0) - (b.order || 0))
+    : [];
 
   return (
     <PageLayout>
@@ -26,7 +35,10 @@ export default function Registration() {
                 <CreditCard className="h-8 w-8 text-primary" />
               </div>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4" data-testid="text-page-title">
+            <h1
+              className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4"
+              data-testid="text-page-title"
+            >
               Registration
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -39,8 +51,9 @@ export default function Registration() {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Important Notice</AlertTitle>
               <AlertDescription>
-                At least one author of each accepted paper must register and attend the conference 
-                for the paper to be included in the proceedings.
+                At least one author of each accepted paper must register and
+                attend the conference for the paper to be included in the
+                proceedings.
               </AlertDescription>
             </Alert>
 
@@ -60,21 +73,37 @@ export default function Registration() {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="font-semibold">Category</TableHead>
-                          <TableHead className="font-semibold">Indian Delegates</TableHead>
-                          <TableHead className="font-semibold">International Delegates</TableHead>
+                          <TableHead className="font-semibold">
+                            Category
+                          </TableHead>
+                          <TableHead className="font-semibold">
+                            Indian Delegates
+                          </TableHead>
+                          <TableHead className="font-semibold">
+                            International Delegates
+                          </TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {sortedFees.map((fee) => (
-                          <TableRow key={fee.id} data-testid={`row-fee-${fee.id}`}>
-                            <TableCell className="font-medium" data-testid={`text-category-${fee.id}`}>
+                          <TableRow
+                            key={fee.id}
+                            data-testid={`row-fee-${fee.id}`}
+                          >
+                            <TableCell
+                              className="font-medium"
+                              data-testid={`text-category-${fee.id}`}
+                            >
                               {fee.category}
                             </TableCell>
-                            <TableCell data-testid={`text-indian-fee-${fee.id}`}>
+                            <TableCell
+                              data-testid={`text-indian-fee-${fee.id}`}
+                            >
                               {fee.indianFee}
                             </TableCell>
-                            <TableCell data-testid={`text-international-fee-${fee.id}`}>
+                            <TableCell
+                              data-testid={`text-international-fee-${fee.id}`}
+                            >
                               {fee.internationalFee}
                             </TableCell>
                           </TableRow>
@@ -128,7 +157,8 @@ export default function Registration() {
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                     <span className="text-muted-foreground">
-                      Networking opportunities with researchers and industry experts
+                      Networking opportunities with researchers and industry
+                      experts
                     </span>
                   </li>
                 </ul>
@@ -141,12 +171,17 @@ export default function Registration() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  Registration will open once the paper acceptance notifications are sent. 
-                  Registered participants will receive a confirmation email with payment instructions 
-                  and further details about the conference.
+                  Registration will open once the paper acceptance notifications
+                  are sent. Registered participants will receive a confirmation
+                  email with payment instructions and further details about the
+                  conference.
                 </p>
                 <div className="pt-4">
-                  <Button size="lg" className="w-full sm:w-auto" data-testid="button-register-now">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto"
+                    data-testid="button-register-now"
+                  >
                     Register Now
                   </Button>
                 </div>

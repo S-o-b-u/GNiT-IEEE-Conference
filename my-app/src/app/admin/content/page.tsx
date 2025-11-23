@@ -1,8 +1,14 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AdminLayout } from "@/components/admin/AdminLayout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { PageContent } from "@shared/schema";
+import type { PageContent } from "@/lib/db/schema";
 
 export default function AdminContentEditor() {
   const { toast } = useToast();
@@ -20,24 +26,32 @@ export default function AdminContentEditor() {
     queryKey: ["/api/page-content", "call-for-paper"],
   });
 
-  const { data: authorGuidelines, isLoading: loadingAG } = useQuery<PageContent>({
-    queryKey: ["/api/page-content", "author-guidelines"],
-  });
+  const { data: authorGuidelines, isLoading: loadingAG } =
+    useQuery<PageContent>({
+      queryKey: ["/api/page-content", "author-guidelines"],
+    });
 
   const { data: paperTemplate, isLoading: loadingPT } = useQuery<PageContent>({
     queryKey: ["/api/page-content", "paper-template"],
   });
 
-  const { data: paperSubmission, isLoading: loadingPS } = useQuery<PageContent>({
-    queryKey: ["/api/page-content", "paper-submission"],
-  });
+  const { data: paperSubmission, isLoading: loadingPS } = useQuery<PageContent>(
+    {
+      queryKey: ["/api/page-content", "paper-submission"],
+    }
+  );
 
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<PageContent> }) =>
       apiRequest("PUT", `/api/page-content/${id}`, data),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/page-content", variables.id] });
-      toast({ title: "Content Updated", description: "Page content has been successfully updated." });
+      queryClient.invalidateQueries({
+        queryKey: ["/api/page-content", variables.id],
+      });
+      toast({
+        title: "Content Updated",
+        description: "Page content has been successfully updated.",
+      });
     },
   });
 
@@ -66,9 +80,7 @@ export default function AdminContentEditor() {
       <Card>
         <CardHeader>
           <CardTitle>{defaultTitle}</CardTitle>
-          <CardDescription>
-            Edit the content for this page
-          </CardDescription>
+          <CardDescription>Edit the content for this page</CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -104,7 +116,8 @@ export default function AdminContentEditor() {
                   data-testid={`input-content-${pageId}`}
                 />
                 <p className="text-xs text-muted-foreground">
-                  You can use plain text or simple formatting. Line breaks will be preserved.
+                  You can use plain text or simple formatting. Line breaks will
+                  be preserved.
                 </p>
               </div>
 
@@ -128,7 +141,9 @@ export default function AdminContentEditor() {
     <AdminLayout>
       <div className="max-w-5xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold font-heading mb-2">Page Content Editor</h1>
+          <h1 className="text-3xl font-bold font-heading mb-2">
+            Page Content Editor
+          </h1>
           <p className="text-muted-foreground">
             Manage content for key conference pages
           </p>
@@ -137,25 +152,47 @@ export default function AdminContentEditor() {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="call-for-paper">Call for Paper</TabsTrigger>
-            <TabsTrigger value="author-guidelines">Author Guidelines</TabsTrigger>
+            <TabsTrigger value="author-guidelines">
+              Author Guidelines
+            </TabsTrigger>
             <TabsTrigger value="paper-template">Paper Template</TabsTrigger>
             <TabsTrigger value="paper-submission">Paper Submission</TabsTrigger>
           </TabsList>
 
           <TabsContent value="call-for-paper" className="mt-6">
-            {renderEditor("call-for-paper", callForPaper, loadingCFP, "Call for Paper")}
+            {renderEditor(
+              "call-for-paper",
+              callForPaper,
+              loadingCFP,
+              "Call for Paper"
+            )}
           </TabsContent>
 
           <TabsContent value="author-guidelines" className="mt-6">
-            {renderEditor("author-guidelines", authorGuidelines, loadingAG, "Author Guidelines")}
+            {renderEditor(
+              "author-guidelines",
+              authorGuidelines,
+              loadingAG,
+              "Author Guidelines"
+            )}
           </TabsContent>
 
           <TabsContent value="paper-template" className="mt-6">
-            {renderEditor("paper-template", paperTemplate, loadingPT, "Paper Template")}
+            {renderEditor(
+              "paper-template",
+              paperTemplate,
+              loadingPT,
+              "Paper Template"
+            )}
           </TabsContent>
 
           <TabsContent value="paper-submission" className="mt-6">
-            {renderEditor("paper-submission", paperSubmission, loadingPS, "Paper Submission")}
+            {renderEditor(
+              "paper-submission",
+              paperSubmission,
+              loadingPS,
+              "Paper Submission"
+            )}
           </TabsContent>
         </Tabs>
       </div>

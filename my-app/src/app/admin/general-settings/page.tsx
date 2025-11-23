@@ -1,8 +1,14 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AdminLayout } from "@/components/admin/AdminLayout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { GeneralSettings } from "@shared/schema";
+import type { GeneralSettings } from "@/lib/db/schema";
 
 export default function AdminGeneralSettings() {
   const { toast } = useToast();
@@ -45,7 +51,7 @@ export default function AdminGeneralSettings() {
   };
 
   const handleChange = (field: keyof GeneralSettings, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   if (isLoading) {
@@ -64,7 +70,9 @@ export default function AdminGeneralSettings() {
     <AdminLayout>
       <div className="max-w-4xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold font-heading mb-2">General Settings</h1>
+          <h1 className="text-3xl font-bold font-heading mb-2">
+            General Settings
+          </h1>
           <p className="text-muted-foreground">
             Manage the main conference information displayed on the website
           </p>
@@ -95,7 +103,9 @@ export default function AdminGeneralSettings() {
                 <Input
                   id="eventSubtitle"
                   defaultValue={settings?.eventSubtitle}
-                  onChange={(e) => handleChange("eventSubtitle", e.target.value)}
+                  onChange={(e) =>
+                    handleChange("eventSubtitle", e.target.value)
+                  }
                   placeholder="e.g., Department of Computer Science and Engineering, GNIT"
                   data-testid="input-event-subtitle"
                 />
@@ -130,18 +140,24 @@ export default function AdminGeneralSettings() {
                 <Input
                   id="eventLocation"
                   defaultValue={settings?.eventLocation}
-                  onChange={(e) => handleChange("eventLocation", e.target.value)}
+                  onChange={(e) =>
+                    handleChange("eventLocation", e.target.value)
+                  }
                   placeholder="e.g., Guru Nanak Institute of Technology"
                   data-testid="input-event-location"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="organizingDepartment">Organizing Department</Label>
+                <Label htmlFor="organizingDepartment">
+                  Organizing Department
+                </Label>
                 <Input
                   id="organizingDepartment"
                   defaultValue={settings?.organizingDepartment}
-                  onChange={(e) => handleChange("organizingDepartment", e.target.value)}
+                  onChange={(e) =>
+                    handleChange("organizingDepartment", e.target.value)
+                  }
                   placeholder="e.g., Department of Computer Science and Engineering"
                   data-testid="input-organizing-dept"
                 />
@@ -152,7 +168,9 @@ export default function AdminGeneralSettings() {
                 <Textarea
                   id="publicationInfo"
                   defaultValue={settings?.publicationInfo}
-                  onChange={(e) => handleChange("publicationInfo", e.target.value)}
+                  onChange={(e) =>
+                    handleChange("publicationInfo", e.target.value)
+                  }
                   placeholder="Information about conference proceedings and publications"
                   rows={4}
                   data-testid="input-publication-info"

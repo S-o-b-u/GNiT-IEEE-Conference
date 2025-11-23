@@ -1,21 +1,37 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AdminLayout } from "@/components/admin/AdminLayout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Plus, Pencil, Trash2, Mail, Phone } from "lucide-react";
-import type { ContactPerson, InsertContactPerson } from "@shared/schema";
+import type { ContactPerson, InsertContactPerson } from "@/lib/db/schema";
 
 export default function AdminContactsManager() {
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingContact, setEditingContact] = useState<ContactPerson | null>(null);
+  const [editingContact, setEditingContact] = useState<ContactPerson | null>(
+    null
+  );
   const [formData, setFormData] = useState<InsertContactPerson>({
     name: "",
     designation: "",
@@ -33,7 +49,10 @@ export default function AdminContactsManager() {
       apiRequest("POST", "/api/contacts", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/contacts"] });
-      toast({ title: "Contact Added", description: "Contact person has been created." });
+      toast({
+        title: "Contact Added",
+        description: "Contact person has been created.",
+      });
       resetForm();
     },
   });
@@ -43,17 +62,22 @@ export default function AdminContactsManager() {
       apiRequest("PUT", `/api/contacts/${id}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/contacts"] });
-      toast({ title: "Contact Updated", description: "Contact person has been updated." });
+      toast({
+        title: "Contact Updated",
+        description: "Contact person has been updated.",
+      });
       resetForm();
     },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) =>
-      apiRequest("DELETE", `/api/contacts/${id}`, {}),
+    mutationFn: (id: string) => apiRequest("DELETE", `/api/contacts/${id}`, {}),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/contacts"] });
-      toast({ title: "Contact Deleted", description: "Contact person has been removed." });
+      toast({
+        title: "Contact Deleted",
+        description: "Contact person has been removed.",
+      });
     },
   });
 
@@ -95,21 +119,31 @@ export default function AdminContactsManager() {
       <div className="max-w-6xl">
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-3xl font-bold font-heading mb-2">Contact Persons</h1>
+            <h1 className="text-3xl font-bold font-heading mb-2">
+              Contact Persons
+            </h1>
             <p className="text-muted-foreground">
               Manage conference contact information
             </p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button onClick={() => { resetForm(); setIsDialogOpen(true); }} data-testid="button-add-contact">
+              <Button
+                onClick={() => {
+                  resetForm();
+                  setIsDialogOpen(true);
+                }}
+                data-testid="button-add-contact"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Contact
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>{editingContact ? "Edit Contact" : "Add New Contact"}</DialogTitle>
+                <DialogTitle>
+                  {editingContact ? "Edit Contact" : "Add New Contact"}
+                </DialogTitle>
                 <DialogDescription>
                   Enter the contact person's details
                 </DialogDescription>
@@ -121,7 +155,12 @@ export default function AdminContactsManager() {
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                       placeholder="Dr. John Doe"
                       data-testid="input-contact-name"
                       required
@@ -132,7 +171,12 @@ export default function AdminContactsManager() {
                     <Input
                       id="designation"
                       value={formData.designation}
-                      onChange={(e) => setFormData(prev => ({ ...prev, designation: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          designation: e.target.value,
+                        }))
+                      }
                       placeholder="Conference Chair"
                       data-testid="input-contact-designation"
                       required
@@ -144,7 +188,12 @@ export default function AdminContactsManager() {
                       id="email"
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
                       placeholder="contact@gnit.ac.in"
                       data-testid="input-contact-email"
                       required
@@ -156,7 +205,12 @@ export default function AdminContactsManager() {
                       id="phone"
                       type="tel"
                       value={formData.phone}
-                      onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          phone: e.target.value,
+                        }))
+                      }
                       placeholder="+91 1234567890"
                       data-testid="input-contact-phone"
                       required
@@ -167,7 +221,12 @@ export default function AdminContactsManager() {
                     <Input
                       id="department"
                       value={formData.department}
-                      onChange={(e) => setFormData(prev => ({ ...prev, department: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          department: e.target.value,
+                        }))
+                      }
                       placeholder="Department of CSE"
                       data-testid="input-contact-department"
                     />
@@ -195,17 +254,24 @@ export default function AdminContactsManager() {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-muted-foreground text-center py-8">Loading...</p>
+              <p className="text-muted-foreground text-center py-8">
+                Loading...
+              </p>
             ) : contacts && contacts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {contacts.map((contact) => (
-                  <Card key={contact.id} data-testid={`card-contact-${contact.id}`}>
+                  <Card
+                    key={contact.id}
+                    data-testid={`card-contact-${contact.id}`}
+                  >
                     <CardContent className="p-6">
                       <div className="space-y-3">
                         <div className="flex items-start justify-between">
                           <div>
                             <h3 className="font-semibold">{contact.name}</h3>
-                            <p className="text-sm text-primary">{contact.designation}</p>
+                            <p className="text-sm text-primary">
+                              {contact.designation}
+                            </p>
                           </div>
                           <div className="flex gap-2">
                             <Button

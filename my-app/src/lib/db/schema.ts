@@ -11,7 +11,7 @@ const timestamps = {
 export const modeEnum = pgEnum("event_mode", ["Hybrid", "Offline", "Online"]); 
 export const committeeRoleEnum = pgEnum("committee_role", ["Advisory", "Organizing", "TPC"]); 
 
-export const generalSettings = pgTable("general_settings", {
+export const GeneralSettings = pgTable("general_settings", {
     id: serial("id").primaryKey(), 
     eventTitle: text("event_title").notNull().default("International Conference 2026"), 
     eventSubtitle: text("event_subtitle"), 
@@ -23,7 +23,7 @@ export const generalSettings = pgTable("general_settings", {
     ...timestamps,
 })
 
-export const importantDates = pgTable("important_dates", {
+export const ImportantDate = pgTable("important_dates", {
     id: serial("id").primaryKey(), 
     title: text("title").notNull(), // eg: Paper Submission
     dateText: text("date_text").notNull(), // eg: "12th December, 2026"
@@ -81,14 +81,14 @@ export const pages = pgTable("pages", {
     ...timestamps, 
 })
 
-export type GeneralSetting = typeof generalSettings.$inferSelect; 
-export type InsertGeneralSetting = typeof generalSettings.$inferInsert; 
+export type GeneralSettings = typeof GeneralSettings.$inferSelect; 
+export type InsertGeneralSetting = typeof GeneralSettings.$inferInsert; 
 
 export type Speaker = typeof speakers.$inferSelect; 
 export type NewSpeaker = typeof speakers.$inferInsert; 
 
 export type CommitteeMember = typeof committee.$inferSelect; 
-export type NewCommitteeMember = typeof committee.$inferInsert; 
+export type InsertCommitteeMember = typeof committee.$inferInsert; 
 
 export type PageContent = typeof pages.$inferSelect; 
 export type NewPageContent = typeof pages.$inferInsert; 

@@ -1,23 +1,45 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AdminLayout } from "@/components/admin/AdminLayout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-import type { CommitteeMember, InsertCommitteeMember } from "@shared/schema";
+import type { CommitteeMember, InsertCommitteeMember } from "@/lib/db/schema";
 
 export default function AdminCommitteeManager() {
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingMember, setEditingMember] = useState<CommitteeMember | null>(null);
+  const [editingMember, setEditingMember] = useState<CommitteeMember | null>(
+    null
+  );
   const [formData, setFormData] = useState<InsertCommitteeMember>({
     name: "",
     affiliation: "",
@@ -34,17 +56,28 @@ export default function AdminCommitteeManager() {
       apiRequest("POST", "/api/committee", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/committee"] });
-      toast({ title: "Member Added", description: "Committee member has been created." });
+      toast({
+        title: "Member Added",
+        description: "Committee member has been created.",
+      });
       resetForm();
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<CommitteeMember> }) =>
-      apiRequest("PUT", `/api/committee/${id}`, data),
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: Partial<CommitteeMember>;
+    }) => apiRequest("PUT", `/api/committee/${id}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/committee"] });
-      toast({ title: "Member Updated", description: "Committee member has been updated." });
+      toast({
+        title: "Member Updated",
+        description: "Committee member has been updated.",
+      });
       resetForm();
     },
   });
@@ -54,7 +87,10 @@ export default function AdminCommitteeManager() {
       apiRequest("DELETE", `/api/committee/${id}`, {}),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/committee"] });
-      toast({ title: "Member Deleted", description: "Committee member has been removed." });
+      toast({
+        title: "Member Deleted",
+        description: "Committee member has been removed.",
+      });
     },
   });
 
@@ -89,15 +125,20 @@ export default function AdminCommitteeManager() {
     setIsDialogOpen(true);
   };
 
-  const renderMembersList = (type: "advisory" | "organizing" | "tpc", title: string) => {
-    const filteredMembers = members?.filter(m => m.committeeType === type) || [];
+  const renderMembersList = (
+    type: "advisory" | "organizing" | "tpc",
+    title: string
+  ) => {
+    const filteredMembers =
+      members?.filter((m) => m.committeeType === type) || [];
 
     return (
       <Card>
         <CardHeader>
           <CardTitle>{title}</CardTitle>
           <CardDescription>
-            {filteredMembers.length} member{filteredMembers.length !== 1 ? 's' : ''}
+            {filteredMembers.length} member
+            {filteredMembers.length !== 1 ? "s" : ""}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -110,9 +151,13 @@ export default function AdminCommitteeManager() {
                       <div>
                         <h3 className="font-semibold">{member.name}</h3>
                         {member.designation && (
-                          <p className="text-sm text-primary">{member.designation}</p>
+                          <p className="text-sm text-primary">
+                            {member.designation}
+                          </p>
                         )}
-                        <p className="text-sm text-muted-foreground">{member.affiliation}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {member.affiliation}
+                        </p>
                       </div>
                       <div className="flex gap-2">
                         <Button
@@ -152,21 +197,31 @@ export default function AdminCommitteeManager() {
       <div className="max-w-6xl">
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-3xl font-bold font-heading mb-2">Committee Members</h1>
+            <h1 className="text-3xl font-bold font-heading mb-2">
+              Committee Members
+            </h1>
             <p className="text-muted-foreground">
               Manage all conference committee members
             </p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button onClick={() => { resetForm(); setIsDialogOpen(true); }} data-testid="button-add-member">
+              <Button
+                onClick={() => {
+                  resetForm();
+                  setIsDialogOpen(true);
+                }}
+                data-testid="button-add-member"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Member
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>{editingMember ? "Edit Member" : "Add New Member"}</DialogTitle>
+                <DialogTitle>
+                  {editingMember ? "Edit Member" : "Add New Member"}
+                </DialogTitle>
                 <DialogDescription>
                   Enter the committee member's details
                 </DialogDescription>
@@ -178,7 +233,12 @@ export default function AdminCommitteeManager() {
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                       placeholder="Dr. Jane Smith"
                       data-testid="input-member-name"
                       required
@@ -189,7 +249,12 @@ export default function AdminCommitteeManager() {
                     <Input
                       id="affiliation"
                       value={formData.affiliation}
-                      onChange={(e) => setFormData(prev => ({ ...prev, affiliation: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          affiliation: e.target.value,
+                        }))
+                      }
                       placeholder="Stanford University"
                       data-testid="input-member-affiliation"
                       required
@@ -200,7 +265,12 @@ export default function AdminCommitteeManager() {
                     <Input
                       id="designation"
                       value={formData.designation}
-                      onChange={(e) => setFormData(prev => ({ ...prev, designation: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          designation: e.target.value,
+                        }))
+                      }
                       placeholder="Professor"
                       data-testid="input-member-designation"
                     />
@@ -209,15 +279,26 @@ export default function AdminCommitteeManager() {
                     <Label htmlFor="committeeType">Committee Type *</Label>
                     <Select
                       value={formData.committeeType}
-                      onValueChange={(value: any) => setFormData(prev => ({ ...prev, committeeType: value }))}
+                      onValueChange={(value: any) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          committeeType: value,
+                        }))
+                      }
                     >
                       <SelectTrigger data-testid="select-committee-type">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="advisory">Advisory Committee</SelectItem>
-                        <SelectItem value="organizing">Organizing Committee</SelectItem>
-                        <SelectItem value="tpc">Technical Program Committee</SelectItem>
+                        <SelectItem value="advisory">
+                          Advisory Committee
+                        </SelectItem>
+                        <SelectItem value="organizing">
+                          Organizing Committee
+                        </SelectItem>
+                        <SelectItem value="tpc">
+                          Technical Program Committee
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

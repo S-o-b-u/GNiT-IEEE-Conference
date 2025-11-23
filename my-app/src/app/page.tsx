@@ -6,12 +6,13 @@ import { SpeakersSection } from "@/components/home/SpeakersSection";
 import { ImportantDatesSection } from "@/components/home/ImportantDatesSection";
 import { AboutSection } from "@/components/home/AboutSection";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { GeneralSettings, Speaker, ImportantDate } from "@shared/schema";
+import type { GeneralSettings, Speaker, ImportantDate } from "@/lib/db/schema";
 
 export default function Home() {
-  const { data: settings, isLoading: settingsLoading } = useQuery<GeneralSettings>({
-    queryKey: ["/api/settings"],
-  });
+  const { data: settings, isLoading: settingsLoading } =
+    useQuery<GeneralSettings>({
+      queryKey: ["/api/settings"],
+    });
 
   const { data: speakers, isLoading: speakersLoading } = useQuery<Speaker[]>({
     queryKey: ["/api/speakers"],

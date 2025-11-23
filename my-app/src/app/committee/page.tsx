@@ -4,18 +4,24 @@ import { PageLayout } from "@/components/layout/PageLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Users } from "lucide-react";
-import type { CommitteeMember } from "@shared/schema";
+import type { CommitteeMember } from "@/lib/db/schema";
 
 export default function Committee() {
   const { data: members, isLoading } = useQuery<CommitteeMember[]>({
     queryKey: ["/api/committee"],
   });
 
-  const advisoryMembers = members?.filter(m => m.committeeType === "advisory") || [];
-  const organizingMembers = members?.filter(m => m.committeeType === "organizing") || [];
-  const tpcMembers = members?.filter(m => m.committeeType === "tpc") || [];
+  const advisoryMembers =
+    members?.filter((m) => m.committeeType === "advisory") || [];
+  const organizingMembers =
+    members?.filter((m) => m.committeeType === "organizing") || [];
+  const tpcMembers = members?.filter((m) => m.committeeType === "tpc") || [];
 
-  const renderCommitteeSection = (title: string, committeeMembers: CommitteeMember[], testIdPrefix: string) => {
+  const renderCommitteeSection = (
+    title: string,
+    committeeMembers: CommitteeMember[],
+    testIdPrefix: string
+  ) => {
     if (committeeMembers.length === 0) return null;
 
     return (
@@ -26,18 +32,31 @@ export default function Committee() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {committeeMembers.map((member) => (
-              <Card key={member.id} className="hover-elevate transition-shadow" data-testid={`${testIdPrefix}-${member.id}`}>
+              <Card
+                key={member.id}
+                className="hover-elevate transition-shadow"
+                data-testid={`${testIdPrefix}-${member.id}`}
+              >
                 <CardContent className="p-6">
                   <div className="space-y-2">
-                    <h3 className="font-semibold font-heading text-lg" data-testid={`text-member-name-${member.id}`}>
+                    <h3
+                      className="font-semibold font-heading text-lg"
+                      data-testid={`text-member-name-${member.id}`}
+                    >
                       {member.name}
                     </h3>
                     {member.designation && (
-                      <p className="text-sm text-primary font-medium" data-testid={`text-member-designation-${member.id}`}>
+                      <p
+                        className="text-sm text-primary font-medium"
+                        data-testid={`text-member-designation-${member.id}`}
+                      >
                         {member.designation}
                       </p>
                     )}
-                    <p className="text-sm text-muted-foreground" data-testid={`text-member-affiliation-${member.id}`}>
+                    <p
+                      className="text-sm text-muted-foreground"
+                      data-testid={`text-member-affiliation-${member.id}`}
+                    >
                       {member.affiliation}
                     </p>
                   </div>
@@ -60,7 +79,10 @@ export default function Committee() {
                 <Users className="h-8 w-8 text-primary" />
               </div>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4" data-testid="text-page-title">
+            <h1
+              className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4"
+              data-testid="text-page-title"
+            >
               Committee
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -80,9 +102,21 @@ export default function Committee() {
             </div>
           ) : (
             <div className="space-y-8">
-              {renderCommitteeSection("Advisory Committee", advisoryMembers, "card-advisory")}
-              {renderCommitteeSection("Organizing Committee", organizingMembers, "card-organizing")}
-              {renderCommitteeSection("Technical Program Committee", tpcMembers, "card-tpc")}
+              {renderCommitteeSection(
+                "Advisory Committee",
+                advisoryMembers,
+                "card-advisory"
+              )}
+              {renderCommitteeSection(
+                "Organizing Committee",
+                organizingMembers,
+                "card-organizing"
+              )}
+              {renderCommitteeSection(
+                "Technical Program Committee",
+                tpcMembers,
+                "card-tpc"
+              )}
 
               {members && members.length === 0 && (
                 <Card>

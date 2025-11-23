@@ -1,17 +1,38 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AdminLayout } from "@/components/admin/AdminLayout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-import type { ImportantDate, InsertImportantDate } from "@shared/schema";
+import type { ImportantDate, InsertImportantDate } from "@/lib/db/schema";
 
 export default function AdminDatesManager() {
   const { toast } = useToast();
@@ -31,7 +52,10 @@ export default function AdminDatesManager() {
       apiRequest("POST", "/api/important-dates", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/important-dates"] });
-      toast({ title: "Date Added", description: "Important date has been created." });
+      toast({
+        title: "Date Added",
+        description: "Important date has been created.",
+      });
       resetForm();
     },
   });
@@ -41,7 +65,10 @@ export default function AdminDatesManager() {
       apiRequest("PUT", `/api/important-dates/${id}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/important-dates"] });
-      toast({ title: "Date Updated", description: "Important date has been updated." });
+      toast({
+        title: "Date Updated",
+        description: "Important date has been updated.",
+      });
       resetForm();
     },
   });
@@ -51,7 +78,10 @@ export default function AdminDatesManager() {
       apiRequest("DELETE", `/api/important-dates/${id}`, {}),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/important-dates"] });
-      toast({ title: "Date Deleted", description: "Important date has been removed." });
+      toast({
+        title: "Date Deleted",
+        description: "Important date has been removed.",
+      });
     },
   });
 
@@ -81,21 +111,31 @@ export default function AdminDatesManager() {
       <div className="max-w-6xl">
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-3xl font-bold font-heading mb-2">Important Dates</h1>
+            <h1 className="text-3xl font-bold font-heading mb-2">
+              Important Dates
+            </h1>
             <p className="text-muted-foreground">
               Manage conference deadlines and key milestones
             </p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button onClick={() => { resetForm(); setIsDialogOpen(true); }} data-testid="button-add-date">
+              <Button
+                onClick={() => {
+                  resetForm();
+                  setIsDialogOpen(true);
+                }}
+                data-testid="button-add-date"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Date
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>{editingDate ? "Edit Date" : "Add New Date"}</DialogTitle>
+                <DialogTitle>
+                  {editingDate ? "Edit Date" : "Add New Date"}
+                </DialogTitle>
                 <DialogDescription>
                   Enter the date and description for this milestone
                 </DialogDescription>
@@ -108,7 +148,12 @@ export default function AdminDatesManager() {
                       id="date"
                       type="date"
                       value={formData.date}
-                      onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          date: e.target.value,
+                        }))
+                      }
                       data-testid="input-date-value"
                       required
                     />
@@ -118,7 +163,12 @@ export default function AdminDatesManager() {
                     <Input
                       id="description"
                       value={formData.description}
-                      onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: e.target.value,
+                        }))
+                      }
                       placeholder="e.g., Paper Submission Deadline"
                       data-testid="input-date-description"
                       required
@@ -147,7 +197,9 @@ export default function AdminDatesManager() {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-muted-foreground text-center py-8">Loading...</p>
+              <p className="text-muted-foreground text-center py-8">
+                Loading...
+              </p>
             ) : dates && dates.length > 0 ? (
               <Table>
                 <TableHeader>

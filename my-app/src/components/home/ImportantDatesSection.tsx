@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock } from "lucide-react";
-import type { ImportantDate } from "@shared/schema";
+import type { ImportantDate } from "@/lib/db/schema";
 import { format, isPast, parseISO } from "date-fns";
 
 interface ImportantDatesSectionProps {
@@ -25,7 +25,10 @@ export function ImportantDatesSection({ dates }: ImportantDatesSectionProps) {
     <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight font-heading sm:text-4xl mb-4" data-testid="text-dates-heading">
+          <h2
+            className="text-3xl font-bold tracking-tight font-heading sm:text-4xl mb-4"
+            data-testid="text-dates-heading"
+          >
             Important Dates
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -47,19 +50,38 @@ export function ImportantDatesSection({ dates }: ImportantDatesSectionProps) {
             }
 
             return (
-              <Card 
-                key={dateItem.id} 
-                className={`hover-elevate transition-all ${isDatePast ? 'opacity-60' : 'border-l-4 border-l-primary'}`}
+              <Card
+                key={dateItem.id}
+                className={`hover-elevate transition-all ${
+                  isDatePast ? "opacity-60" : "border-l-4 border-l-primary"
+                }`}
                 data-testid={`card-date-${dateItem.id}`}
               >
                 <CardContent className="p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div className="flex items-center gap-3 sm:min-w-[240px]">
-                      <div className={`p-3 rounded-lg ${isDatePast ? 'bg-muted' : 'bg-primary/10'}`}>
-                        <Calendar className={`h-5 w-5 ${isDatePast ? 'text-muted-foreground' : 'text-primary'}`} />
+                      <div
+                        className={`p-3 rounded-lg ${
+                          isDatePast ? "bg-muted" : "bg-primary/10"
+                        }`}
+                      >
+                        <Calendar
+                          className={`h-5 w-5 ${
+                            isDatePast
+                              ? "text-muted-foreground"
+                              : "text-primary"
+                          }`}
+                        />
                       </div>
                       <div>
-                        <p className={`text-sm font-semibold font-heading ${isDatePast ? 'text-muted-foreground' : 'text-foreground'}`} data-testid={`text-date-value-${dateItem.id}`}>
+                        <p
+                          className={`text-sm font-semibold font-heading ${
+                            isDatePast
+                              ? "text-muted-foreground"
+                              : "text-foreground"
+                          }`}
+                          data-testid={`text-date-value-${dateItem.id}`}
+                        >
                           {formattedDate}
                         </p>
                         {isDatePast && (
@@ -70,9 +92,16 @@ export function ImportantDatesSection({ dates }: ImportantDatesSectionProps) {
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="flex-1">
-                      <p className={`text-base ${isDatePast ? 'text-muted-foreground' : 'text-foreground font-medium'}`} data-testid={`text-date-description-${dateItem.id}`}>
+                      <p
+                        className={`text-base ${
+                          isDatePast
+                            ? "text-muted-foreground"
+                            : "text-foreground font-medium"
+                        }`}
+                        data-testid={`text-date-description-${dateItem.id}`}
+                      >
                         {dateItem.description}
                       </p>
                     </div>

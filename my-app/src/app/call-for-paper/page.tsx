@@ -4,7 +4,7 @@ import { PageLayout } from "@/components/layout/PageLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FileText } from "lucide-react";
-import type { PageContent } from "@shared/schema";
+import type { PageContent } from "@/lib/db/schema";
 
 export default function CallForPaper() {
   const { data: content, isLoading } = useQuery<PageContent>({
@@ -21,11 +21,15 @@ export default function CallForPaper() {
                 <FileText className="h-8 w-8 text-primary" />
               </div>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4" data-testid="text-page-title">
+            <h1
+              className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4"
+              data-testid="text-page-title"
+            >
               {content?.title || "Call for Paper"}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              We invite original research contributions addressing emerging trends in technology
+              We invite original research contributions addressing emerging
+              trends in technology
             </p>
           </div>
 
@@ -38,7 +42,10 @@ export default function CallForPaper() {
           ) : (
             <Card>
               <CardContent className="p-8 md:p-12">
-                <div className="prose prose-lg max-w-none" data-testid="text-page-content">
+                <div
+                  className="prose prose-lg max-w-none"
+                  data-testid="text-page-content"
+                >
                   {content?.content ? (
                     <div className="whitespace-pre-wrap leading-relaxed text-foreground">
                       {content.content}
@@ -46,11 +53,14 @@ export default function CallForPaper() {
                   ) : (
                     <div className="space-y-6 text-foreground">
                       <p>
-                        We invite researchers, academicians, and industry professionals to submit 
-                        original research papers on emerging trends in technology and related fields.
+                        We invite researchers, academicians, and industry
+                        professionals to submit original research papers on
+                        emerging trends in technology and related fields.
                       </p>
-                      
-                      <h3 className="text-xl font-semibold font-heading mt-8 mb-4">Topics of Interest</h3>
+
+                      <h3 className="text-xl font-semibold font-heading mt-8 mb-4">
+                        Topics of Interest
+                      </h3>
                       <ul className="space-y-2 text-muted-foreground">
                         <li>Artificial Intelligence and Machine Learning</li>
                         <li>Internet of Things and Smart Systems</li>
@@ -62,10 +72,13 @@ export default function CallForPaper() {
                         <li>Software Engineering and Development</li>
                       </ul>
 
-                      <h3 className="text-xl font-semibold font-heading mt-8 mb-4">Submission Guidelines</h3>
+                      <h3 className="text-xl font-semibold font-heading mt-8 mb-4">
+                        Submission Guidelines
+                      </h3>
                       <p className="text-muted-foreground">
-                        All submissions must be original work and not under consideration elsewhere. 
-                        Papers will undergo a rigorous peer-review process by our technical program committee.
+                        All submissions must be original work and not under
+                        consideration elsewhere. Papers will undergo a rigorous
+                        peer-review process by our technical program committee.
                       </p>
                     </div>
                   )}

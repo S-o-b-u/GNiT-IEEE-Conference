@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, Clock } from "lucide-react";
-import type { ImportantDate } from "@shared/schema";
+import type { ImportantDate } from "@/lib/db/schema";
 import { format, isPast, parseISO } from "date-fns";
 
 export default function ImportantDatesPage() {
@@ -13,13 +13,15 @@ export default function ImportantDatesPage() {
     queryKey: ["/api/important-dates"],
   });
 
-  const sortedDates = dates ? [...dates].sort((a, b) => {
-    try {
-      return parseISO(a.date).getTime() - parseISO(b.date).getTime();
-    } catch {
-      return 0;
-    }
-  }) : [];
+  const sortedDates = dates
+    ? [...dates].sort((a, b) => {
+        try {
+          return parseISO(a.date).getTime() - parseISO(b.date).getTime();
+        } catch {
+          return 0;
+        }
+      })
+    : [];
 
   return (
     <PageLayout>
@@ -31,7 +33,10 @@ export default function ImportantDatesPage() {
                 <Calendar className="h-8 w-8 text-primary" />
               </div>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4" data-testid="text-page-title">
+            <h1
+              className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4"
+              data-testid="text-page-title"
+            >
               Important Dates
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -62,17 +67,36 @@ export default function ImportantDatesPage() {
                 return (
                   <Card
                     key={dateItem.id}
-                    className={`hover-elevate transition-all ${isDatePast ? 'opacity-60' : 'border-l-4 border-l-primary'}`}
+                    className={`hover-elevate transition-all ${
+                      isDatePast ? "opacity-60" : "border-l-4 border-l-primary"
+                    }`}
                     data-testid={`card-date-${dateItem.id}`}
                   >
                     <CardContent className="p-6">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                         <div className="flex items-center gap-3 sm:min-w-[240px]">
-                          <div className={`p-3 rounded-lg ${isDatePast ? 'bg-muted' : 'bg-primary/10'}`}>
-                            <Calendar className={`h-5 w-5 ${isDatePast ? 'text-muted-foreground' : 'text-primary'}`} />
+                          <div
+                            className={`p-3 rounded-lg ${
+                              isDatePast ? "bg-muted" : "bg-primary/10"
+                            }`}
+                          >
+                            <Calendar
+                              className={`h-5 w-5 ${
+                                isDatePast
+                                  ? "text-muted-foreground"
+                                  : "text-primary"
+                              }`}
+                            />
                           </div>
                           <div>
-                            <p className={`text-sm font-semibold font-heading ${isDatePast ? 'text-muted-foreground' : 'text-foreground'}`} data-testid={`text-date-value-${dateItem.id}`}>
+                            <p
+                              className={`text-sm font-semibold font-heading ${
+                                isDatePast
+                                  ? "text-muted-foreground"
+                                  : "text-foreground"
+                              }`}
+                              data-testid={`text-date-value-${dateItem.id}`}
+                            >
                               {formattedDate}
                             </p>
                             {isDatePast && (
@@ -85,7 +109,14 @@ export default function ImportantDatesPage() {
                         </div>
 
                         <div className="flex-1">
-                          <p className={`text-base ${isDatePast ? 'text-muted-foreground' : 'text-foreground font-medium'}`} data-testid={`text-date-description-${dateItem.id}`}>
+                          <p
+                            className={`text-base ${
+                              isDatePast
+                                ? "text-muted-foreground"
+                                : "text-foreground font-medium"
+                            }`}
+                            data-testid={`text-date-description-${dateItem.id}`}
+                          >
                             {dateItem.description}
                           </p>
                         </div>
@@ -100,7 +131,8 @@ export default function ImportantDatesPage() {
               <CardContent className="p-12 text-center">
                 <Calendar className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                 <p className="text-muted-foreground">
-                  Important dates will be announced soon. Please check back later.
+                  Important dates will be announced soon. Please check back
+                  later.
                 </p>
               </CardContent>
             </Card>

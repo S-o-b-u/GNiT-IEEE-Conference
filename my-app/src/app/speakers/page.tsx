@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Mic, Linkedin } from "lucide-react";
-import type { Speaker } from "@shared/schema";
+import type { Speaker } from "@/lib/db/schema";
 
 export default function Speakers() {
   const { data: speakers, isLoading } = useQuery<Speaker[]>({
