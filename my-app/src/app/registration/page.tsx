@@ -14,15 +14,18 @@ import {
 } from "@/components/ui/table";
 import { CreditCard, CheckCircle2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import type { RegistrationFee } from "@/lib/db/schema";
+import type { RegistrationFees } from "@/lib/db/schema";
+import { api } from "@/lib/api";
 
 export default function Registration() {
-  const { data: fees, isLoading } = useQuery<RegistrationFee[]>({
-    queryKey: ["/api/registration-fees"],
+ // FIX: Connect to the API client
+  const { data: fees, isLoading } = useQuery<RegistrationFees[]>({
+    queryKey: ["fees"], // Simplified key
+    queryFn: api.fees.getAll, // <--- The Fetch Function
   });
 
   const sortedFees = fees
-    ? [...fees].sort((a, b) => (a.order || 0) - (b.order || 0))
+    ? [...fees].sort((a, b) => (a.id || 0) - (b.id || 0)) // Sorting by ID usually works for fees
     : [];
 
   return (

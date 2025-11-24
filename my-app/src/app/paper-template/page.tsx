@@ -6,10 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FileDown, FileText, CheckCircle2 } from "lucide-react";
 import type { PageContent } from "@/lib/db/schema";
+import { api } from "@/lib/api";
 
 export default function PaperTemplate() {
-  const { data: content, isLoading } = useQuery<PageContent>({
-    queryKey: ["/api/page-content", "paper-template"],
+  // FIX: Use api.pages.get with the specific slug
+  const { data: pageData, isLoading } = useQuery<PageContent>({
+    queryKey: ["pages", "paper-template"], 
+    queryFn: () => api.pages.get("paper-template"), // Fetches specific CMS content
   });
 
   return (
@@ -26,7 +29,7 @@ export default function PaperTemplate() {
               className="text-4xl font-bold tracking-tight font-heading sm:text-5xl mb-4"
               data-testid="text-page-title"
             >
-              {content?.title || "Paper Template"}
+              {pageData?.title || "Paper Template"}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Download the official conference paper template and formatting
@@ -50,13 +53,13 @@ export default function PaperTemplate() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  {content?.content && (
+                  {pageData?.content && (
                     <div
                       className="prose prose-lg max-w-none mb-6"
                       data-testid="text-page-content"
                     >
                       <div className="whitespace-pre-wrap leading-relaxed text-muted-foreground">
-                        {content.content}
+                        {pageData.content}
                       </div>
                     </div>
                   )}

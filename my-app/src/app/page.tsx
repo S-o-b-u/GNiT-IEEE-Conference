@@ -7,19 +7,24 @@ import { ImportantDatesSection } from "@/components/home/ImportantDatesSection";
 import { AboutSection } from "@/components/home/AboutSection";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { GeneralSettings, Speaker, ImportantDate } from "@/lib/db/schema";
+import { api } from "@/lib/api";
 
 export default function Home() {
+  // 1. Settings Query
   const { data: settings, isLoading: settingsLoading } =
     useQuery<GeneralSettings>({
-      queryKey: ["/api/settings"],
+      queryKey: ["settings"],
+      queryFn: api.settings.get,
     });
-
+  // 2. Speakers Query
   const { data: speakers, isLoading: speakersLoading } = useQuery<Speaker[]>({
-    queryKey: ["/api/speakers"],
+    queryKey: ["speakers"],
+    queryFn: api.speakers.getAll,
   });
-
+  // 3. Dates Query
   const { data: dates, isLoading: datesLoading } = useQuery<ImportantDate[]>({
-    queryKey: ["/api/important-dates"],
+    queryKey: ["dates"],
+    queryFn: api.dates.getAll,
   });
 
   return (

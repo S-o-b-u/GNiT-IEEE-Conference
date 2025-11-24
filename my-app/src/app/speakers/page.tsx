@@ -7,10 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Mic, Linkedin } from "lucide-react";
 import type { Speaker } from "@/lib/db/schema";
+import { api } from "@/lib/api";
 
 export default function Speakers() {
   const { data: speakers, isLoading } = useQuery<Speaker[]>({
-    queryKey: ["/api/speakers"],
+    queryKey: ["speakers"], // Clean cache key
+    queryFn: api.speakers.getAll, // Connects to your backend
   });
 
   return (
