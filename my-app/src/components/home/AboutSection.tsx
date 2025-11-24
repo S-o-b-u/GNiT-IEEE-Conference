@@ -1,30 +1,71 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Users, Award, Globe } from "lucide-react";
+import BlurText from "../ui/BlurText";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface AboutSectionProps {
   publicationInfo?: string;
 }
 
 export function AboutSection({ publicationInfo }: AboutSectionProps) {
+
+  // const containerRef = useRef(null);
+
+  // useEffect(() => {
+  //   const el = containerRef.current;
+  //   const paragraphs = el.querySelectorAll("p"); // animate all <p> tags
+
+  //   gsap.from(paragraphs, {
+  //     opacity: 0,
+  //     y: 50,
+  //     duration: 1,
+  //     stagger: 0.2,
+  //     ease: "power3.out",
+
+  //     scrollTrigger: {
+  //       trigger: el,
+  //       start: "top 80%",
+  //       end: "bottom 30%",
+  //       scrub: false,
+  //       once: true,
+  //     },
+  //   });
+  // }, []);
+
   return (
     <section className="py-16 md:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <div className="space-y-6">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight font-heading sm:text-4xl mb-4" data-testid="text-about-heading">
-                About the Conference
+              <h2
+                className="text-3xl font-bold tracking-tight font-heading sm:text-4xl mb-4"
+                data-testid="text-about-heading"
+              >
+                <BlurText
+                  text="About ICETT-2026"
+                  delay={150}
+                  animateBy="words"
+                  direction="top"
+                  className="text-2xl mb-8"
+                />
               </h2>
               <div className="prose prose-lg max-w-none text-muted-foreground">
                 <p>
-                  The 2nd International Conference on Emerging Trends in Technology (ICETT-2026) 
-                  serves as a premier platform for researchers, academics, and industry professionals 
-                  to present their latest research findings and innovations.
+                  The 2nd International Conference on Emerging Trends in
+                  Technology (ICETT-2026) serves as a premier platform for
+                  researchers, academics, and industry professionals to present
+                  their latest research findings and innovations.
                 </p>
                 <p className="mt-4">
-                  This conference aims to foster collaboration, knowledge exchange, and networking 
-                  among participants from diverse backgrounds, promoting advancements in computer 
-                  science and engineering.
+                  This conference aims to foster collaboration, knowledge
+                  exchange, and networking among participants from diverse
+                  backgrounds, promoting advancements in computer science and
+                  engineering.
                 </p>
               </div>
             </div>
@@ -38,7 +79,10 @@ export function AboutSection({ publicationInfo }: AboutSectionProps) {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed" data-testid="text-publication-info">
+                  <p
+                    className="text-sm text-muted-foreground leading-relaxed"
+                    data-testid="text-publication-info"
+                  >
                     {publicationInfo}
                   </p>
                 </CardContent>
@@ -53,9 +97,12 @@ export function AboutSection({ publicationInfo }: AboutSectionProps) {
                   <div className="p-3 rounded-lg bg-primary/10">
                     <Users className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold font-heading">Expert Speakers</h3>
+                  <h3 className="text-lg font-semibold font-heading">
+                    Expert Speakers
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    Renowned researchers and industry leaders sharing their insights
+                    Renowned researchers and industry leaders sharing their
+                    insights
                   </p>
                 </div>
               </CardContent>
@@ -67,7 +114,9 @@ export function AboutSection({ publicationInfo }: AboutSectionProps) {
                   <div className="p-3 rounded-lg bg-primary/10">
                     <Globe className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold font-heading">Global Network</h3>
+                  <h3 className="text-lg font-semibold font-heading">
+                    Global Network
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     Connect with peers and experts from around the world
                   </p>
@@ -81,7 +130,9 @@ export function AboutSection({ publicationInfo }: AboutSectionProps) {
                   <div className="p-3 rounded-lg bg-primary/10">
                     <BookOpen className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold font-heading">Quality Publications</h3>
+                  <h3 className="text-lg font-semibold font-heading">
+                    Quality Publications
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     Peer-reviewed proceedings in prestigious journals
                   </p>
@@ -95,7 +146,9 @@ export function AboutSection({ publicationInfo }: AboutSectionProps) {
                   <div className="p-3 rounded-lg bg-primary/10">
                     <Award className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold font-heading">Best Paper Awards</h3>
+                  <h3 className="text-lg font-semibold font-heading">
+                    Best Paper Awards
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     Recognition for outstanding research contributions
                   </p>
