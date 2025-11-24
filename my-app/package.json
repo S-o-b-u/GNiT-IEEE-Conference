@@ -75,6 +75,7 @@
     "drizzle-kit": "^0.31.7",
     "pg": "^8.16.3",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }
